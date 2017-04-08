@@ -7,5 +7,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/public'));
 
+var models = require("./models/models")();
+require("./services/services")(app, models);
+
 var port = process.env.PORT || 3000;
 app.listen(port);
