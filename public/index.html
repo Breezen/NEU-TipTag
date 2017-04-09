@@ -18,6 +18,7 @@
     <script src="config.js"></script>
 
     <!--controllers-->
+    <script src="controllers/header.controller.js"></script>
     <script src="controllers/home.controller.js"></script>
     <script src="controllers/user.controller.js"></script>
 
@@ -27,8 +28,12 @@
 </head>
 
 <body>
+<div>Header</div>
+<ng-include src="'views/header.view.html'"></ng-include>
 
+<div>View</div>
 <ng-view></ng-view>
 
+<div>Footer</div>
 </body>
 </html>
