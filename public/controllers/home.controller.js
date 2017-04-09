@@ -1,9 +1,9 @@
 (function () {
     angular
         .module("TipTag")
-        .controller("HomepageController", HomepageController);
+        .controller("HomeController", HomeController);
     
-    function HomepageController($location) {
+    function HomeController($location) {
         var vm = this;
         vm.login = function () {
             $location.url("/login");

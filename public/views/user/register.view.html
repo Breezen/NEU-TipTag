@@ -1,1 +1,15 @@
-Register
+<div class="container">
+    <h1>Register</h1>
+    <form>
+        <input ng-model="model.user.username" type="text" class="form-control" id="username" placeholder="Username">
+        <input ng-model="model.user.password" type="password" class="form-control" id="password" placeholder="Password">
+        <input ng-model="model.user.name" type="text" class="form-control" id="name" placeholder="Name">
+        I'm a
+        <select ng-model="model.user.userType" class="form-control" name="userType" id="userType">
+            <option value="TAGGER">Tagger</option>
+            <option value="TIPPER">Tipper</option>
+        </select>
+    </form>
+    <a ng-click="model.register(model.user)">Register</a>
+    <a href="#/">Back</a>
+</div>
