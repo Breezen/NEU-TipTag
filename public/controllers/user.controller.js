@@ -4,13 +4,16 @@
         .controller("RegisterController", RegisterController)
         .controller("LoginController", LoginController);
 
-    function RegisterController($location, UserService) {
+    function RegisterController($rootScope, $location, UserService) {
         var vm = this;
         vm.register = function (user) {
+            if (!(user.username && user.password)) return;
             UserService
-                .createUser(user)
+                .register(user)
                 .then(function (res) {
-                    alert("User " + res.data.username + " created!");
+                    var user = res.data;
+                    alert("User " + user.username + " created!");
+                    $rootScope.currentUser = user;
                     $location.url("/");
                 }, function (err) {
                     alert("Error: " + err.statusText);
@@ -18,14 +21,16 @@
         };
     }
     
-    function LoginController($location, UserService) {
+    function LoginController($rootScope, $location, UserService) {
         var vm = this;
         vm.login = function (user) {
-            if (!user.password) return;
+            if (!(user.username && user.password)) return;
             UserService
-                .findCredential(user)
+                .login(user)
                 .then(function (res) {
-                    alert("User " + res.data.username + " login!");
+                    var user = res.data;
+                    alert("User " + user.username + " login!");
+                    $rootScope.currentUser = user;
                     $location.url("/");
                 }, function (err) {
                     alert("Error: " + err.statusText);

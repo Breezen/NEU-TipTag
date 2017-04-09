@@ -3,7 +3,9 @@ module.exports = function (mongoose) {
         ObjectId = Schema.ObjectId;
 
     var taskSchema = Schema({
-        name: String,
+        name: { type: String, required: true },
+        tipper: { type: ObjectId, ref: "User", required: true },
+        tagger: { type: ObjectId, ref: "User" },
         dateCreated: { type: Date, default: Date.now }
     });
 

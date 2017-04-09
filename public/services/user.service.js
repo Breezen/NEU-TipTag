@@ -5,17 +5,27 @@
     
     function userService($http) {
         var api = {
-            createUser: createUser,
-            findCredential: findCredential
+            register: register,
+            login: login,
+            logout: logout,
+            loggedin: loggedin
         };
         return api;
 
-        function createUser(user) {
-            return $http.post("/api/user", user);
+        function register(user) {
+            return $http.post("/api/register", user);
         }
 
-        function findCredential(user) {
-            return $http.get("/api/user?username=" + user.username + "&password=" + user.password);
+        function login(user) {
+            return $http.post("/api/login", user);
+        }
+
+        function logout() {
+            return $http.post("/api/logout");
+        }
+
+        function loggedin() {
+            return $http.get("/api/loggedin");
         }
     }
 })();

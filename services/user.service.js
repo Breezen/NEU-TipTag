@@ -1,47 +1,60 @@
+var passport= require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
 module.exports = function (app, models) {
 
-    app.post("/api/user", createUser);
-    app.get("/api/user", findUser);
+    app.post("/api/register", register);
+    app.post("/api/login", passport.authenticate("local"), login);
+    app.post("/api/logout", logout);
+    app.get("/api/loggedin", loggedin);
 
-    var userModel = models.userModel;
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+    passport.use(new LocalStrategy(localStrategy));
 
-    function createUser(req, res) {
-        var user = req.body;
-        userModel.create(user, function (err, user) {
-            if (err) {res.send(err);}
-            else {res.json(user);}
+    function serializeUser(user, done) {
+        done(null, user);
+    }
+    
+    function deserializeUser(user, done) {
+        userModel.findById(user._id, function (err, user) {
+            done(err, user);
+        });
+    }
+    
+    function localStrategy(username, password, done) {
+        userModel.findOne({username: username, password: password}, function (err, user) {
+            if (err) { return done(err); }
+            if (!user) { return done(null, false, { message: 'Incorrect username/password.' }); }
+            return done(null, user);
         });
     }
 
-    function findUser(req, res) {
-        var username = req.query.username;
-        var password = req.query.password;
-        if (username && password) {
-            findUserByCredentials(username, password, res);
-        } else if (username) {
-            findUserByUsername(username, res);
-        }
+    var userModel = models.userModel;
+
+    function register(req, res) {
+        var user = req.body;
+        userModel.create(user, function (err, user) {
+            if (err) res.status(400).send(err);
+            else {
+                req.login(user, function (err) {
+                    if (err) res.status(400).send(err);
+                    else res.json(user);
+                });
+            }
+        });
     }
 
-    function findUserByCredentials(username, password, res) {
-        userModel
-            .findOne({username: username, password: password}, function (err, user) {
-                if (err) {res.send(err);}
-                else {
-                    if (!user) res.sendStatus(404);
-                    else res.json(user);
-                }
-            });
+    function login(req, res) {
+        res.json(req.user);
+    }
+    
+    function logout(req, res) {
+        req.logOut();
+        res.sendStatus(200);
     }
 
-    function findUserByUsername(username, res) {
-        userModel
-            .findOne({username: username}, function (err, user) {
-                if (err) {res.send(err);}
-                else {
-                    if (!user) res.sendStatus(404);
-                    else res.json(user);
-                }
-            });
+    function loggedin(req, res) {
+        res.send(req.isAuthenticated() ? req.user : false);
     }
 };
