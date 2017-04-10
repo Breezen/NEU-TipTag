@@ -25,6 +25,11 @@
                 controller: "AdminController",
                 controllerAs: "model"
             })
+            .when("/tasks", {
+                templateUrl: "views/task/list.view.html",
+                controller: "TaskListController",
+                controllerAs: "model"
+            })
             .otherwise({redirectTo: "/"});
     }
 })();

@@ -5,7 +5,6 @@ module.exports = function (mongoose) {
     var taskSchema = Schema({
         name: { type: String, required: true },
         tipper: { type: ObjectId, ref: "User", required: true },
-        tagger: { type: ObjectId, ref: "User" },
         dateCreated: { type: Date, default: Date.now }
     });
 

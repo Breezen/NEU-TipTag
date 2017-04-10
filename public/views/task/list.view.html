@@ -1,0 +1,12 @@
+<div class="container">
+    <ul class="nav nav-pills nav-justified">
+        <li class="active"><a href="">Posted tasks</a></li>
+        <li><a href="">Unsplash tasks</a></li>
+        <li><a href="">Create a task</a></li>
+    </ul>
+    <ul>
+        <li ng-repeat="task in model.tasks">
+            {{task.name}}, {{task.tipper}}
+        </li>
+    </ul>
+</div>
