@@ -1,12 +1,12 @@
 <div class="container" ng-controller="HeaderController as model">
     <ul>
         <li><a href="#/">Home</a></li>
-        <li ng-show="currentUser.userType == 'ADMIN'">Login Admin: <a href="#/admin">Manage Users</a></li>
-        <li ng-show="currentUser">Login User: <a href="">Profile</a></li>
+        <li ng-if="currentUser.userType == 'ADMIN'">Login Admin: <a href="#/admin">Manage Users</a></li>
+        <li ng-if="currentUser">Login User: <a href="">Profile</a></li>
         <li>Visitor</li>
         <li><a href="#/tasks">Browse tasks</a></li>
-        <li ng-hide="currentUser"><a href="#/register">Register</a></li>
-        <li ng-hide="currentUser"><a ng-click="model.login()">Login</a></li>
-        <li ng-show="currentUser"><a ng-click="model.logout()">Logout</a></li>
+        <li ng-if="!currentUser"><a href="#/register">Register</a></li>
+        <li ng-if="!currentUser"><a ng-click="model.login()">Login</a></li>
+        <li ng-if="currentUser"><a ng-click="model.logout()">Logout</a></li>
     </ul>
 </div>
