@@ -13,6 +13,9 @@ module.exports = function (app, models) {
     app.post("/api/logout", logout);
     app.get("/api/loggedin", loggedin);
     app.get("/api/users", findUsers);
+    app.post("/api/user", create);
+    app.put("/api/user", update);
+    app.delete("/api/user/:userId", deleteUser);
 
     var userModel = models.userModel;
 
@@ -66,5 +69,30 @@ module.exports = function (app, models) {
             if (err) res.status(500).send(err);
             else res.json(users);
         });
+    }
+
+    function create(req, res) {
+        var user = req.body;
+        user.password = bcrypt.hashSync(user.password);
+        userModel.create(user, function (err, user) {
+            if (err) res.status(400).send(err);
+            else res.json(user);
+        })
+    }
+
+    function update(req, res) {
+        var user = req.body;
+        userModel.findByIdAndUpdate(user._id, {$set: user}, function (err, user) {
+            if (err) res.status(400).send(err);
+            else res.json(user);
+        });
+    }
+
+    function deleteUser(req, res) {
+        var userId = req.params.userId;
+        userModel.findByIdAndRemove(userId, function (err, user) {
+            if (err) res.status(400).send(err);
+            else res.json(user);
+        })
     }
 };

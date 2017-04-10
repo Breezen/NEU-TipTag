@@ -1,7 +1,47 @@
 <div class="container">
-    <ol>
-        <li ng-repeat="user in model.users">
-            {{user.username}}, {{user.password}}, {{user.name}}, {{user.userType}}
-        </li>
-    </ol>
+    <!--<ol>-->
+        <!--<li ng-repeat="user in model.users">-->
+            <!--{{user.username}}, {{user.password}}, {{user.name}}, {{user.userType}}-->
+        <!--</li>-->
+    <!--</ol>-->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in model.users">
+                <td><input type="text" class="form-control" ng-model="user.username"></td>
+                <td></td>
+                <td><input type="text" class="form-control" ng-model="user.name"></td>
+                <td><select class="form-control" ng-model="user.userType">
+                    <option value="TAGGER">Tagger</option>
+                    <option value="TIPPER">Tipper</option>
+                    <option value="ADMIN">Admin</option>
+                </select></td>
+                <td>
+                    <a ng-click="model.update(user)">Update</a>
+                    <a ng-click="model.delete(user)">Delete</a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control" ng-model="user.username"></td>
+                <td><input type="text" class="form-control" ng-model="user.password"></td>
+                <td><input type="text" class="form-control" ng-model="user.name"></td>
+                <td><select class="form-control" ng-model="user.userType">
+                    <option value="TAGGER">Tagger</option>
+                    <option value="TIPPER">Tipper</option>
+                    <option value="ADMIN">Admin</option>
+                </select></td>
+                <td>
+                    <a ng-click="model.create(user)">Create</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

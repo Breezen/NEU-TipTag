@@ -9,7 +9,10 @@
             login: login,
             logout: logout,
             loggedin: loggedin,
-            findUsers: findUsers
+            findUsers: findUsers,
+            create: create,
+            update: update,
+            delete: deleteUser
         };
         return api;
 
@@ -31,6 +34,18 @@
         
         function findUsers() {
             return $http.get("/api/users");
+        }
+        
+        function create(user) {
+            return $http.post("/api/user", user);
+        }
+
+        function update(user) {
+            return $http.put("/api/user", user);
+        }
+
+        function deleteUser(user) {
+            return $http.delete("/api/user/" + user._id);
         }
     }
 })();

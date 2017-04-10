@@ -39,7 +39,7 @@
         };
     }
     
-    function AdminController($rootScope, $location, UserService) {
+    function AdminController($rootScope, $location, $route, UserService) {
         var vm = this;
 
         function init() {
@@ -52,5 +52,38 @@
                 });
         }
         init();
+        
+        vm.create = function (user) {
+            UserService
+                .create(user)
+                .then(function (res) {
+                    alert("User " + user.username + " created!");
+                    $route.reload();
+                }, function (err) {
+                    alert("Error: " + err.statusText);
+                })
+        };
+        
+        vm.update = function (user) {
+            UserService
+                .update(user)
+                .then(function (res) {
+                    alert("User " + user.username + " updated!");
+                    $route.reload();
+                }, function (err) {
+                    alert("Error: " + err.statusText);
+                });
+        };
+        
+        vm.delete = function (user) {
+            UserService
+                .delete(user)
+                .then(function (res) {
+                    alert("User " + user.username + " deleted!");
+                    $route.reload();
+                }, function (err) {
+                    alert("Error: " + err.statusText);
+                });
+        };
     }
 })();
