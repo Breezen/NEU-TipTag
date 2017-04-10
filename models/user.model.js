@@ -8,8 +8,12 @@ module.exports = function (mongoose) {
         password: { type: String, required: true },
         name: String,
         balance: { type: Number, default: 0 },
-        tasks: [{ type: ObjectId, ref: "Task" }],
-        dateCreated: { type: Date, default: Date.now }
+        // tasks: [{ type: ObjectId, ref: "Task" }],
+        dateCreated: { type: Date, default: Date.now },
+        facebook: {
+            id: String,
+            token: String
+        }
     });
 
     return mongoose.model("User", userSchema);

@@ -2,16 +2,25 @@ module.exports = function (app, models) {
 
     var passport= require('passport'),
         LocalStrategy = require('passport-local').Strategy,
+        FacebookStrategy = require('passport-facebook').Strategy,
         bcrypt = require("bcrypt-nodejs");
+    var facebookConfig = {
+        clientID: 233601263783851,
+        clientSecret: "ebe4d2ae38b0b86977d1700fcbb6593e",
+        callbackURL: "http://localhost:3000/#/"
+    };
 
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
     passport.use(new LocalStrategy(localStrategy));
+    passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
 
     app.post("/api/register", register);
     app.post("/api/login", passport.authenticate("local"), login);
     app.post("/api/logout", logout);
     app.get("/api/loggedin", loggedin);
+    app.get("/auth/facebook", passport.authenticate("facebook", {scope: "email"}));
+    app.get("/auth/facebook/callback", passport.authenticate("facebook", {successRedirect: "/#/", failureRedirect: "/#/login"}));
     app.get("/api/users", findUsers);
     app.post("/api/user", create);
     app.put("/api/user", update);
@@ -35,6 +44,10 @@ module.exports = function (app, models) {
             if (user && bcrypt.compareSync(password, user.password)) return done(null, user);
             return done(null, false, { message: 'Incorrect username/password.' });
         });
+    }
+
+    function facebookStrategy(token, refreshToken, profile, done) {
+        userModel.findOne({"facebook.id": profile.id});
     }
 
     function register(req, res) {
