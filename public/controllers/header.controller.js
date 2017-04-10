@@ -20,11 +20,6 @@
             $location.url("/login");
         };
 
-        vm.loggedin = function () {
-            if ($rootScope.currentUser) return $rootScope.currentUser.userType;
-            else return false;
-        };
-
         vm.logout = function () {
             UserService
                 .logout()

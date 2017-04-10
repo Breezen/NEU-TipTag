@@ -1,9 +1,9 @@
 (function () {
     angular
         .module("TipTag")
-        .factory("UserService", userService);
+        .factory("UserService", UserService);
     
-    function userService($http) {
+    function UserService($http) {
         var api = {
             register: register,
             login: login,
