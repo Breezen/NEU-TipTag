@@ -19,9 +19,12 @@
         vm.login = function () {
             $location.url("/login");
         };
+
         vm.loggedin = function () {
-            return $rootScope.currentUser !== null;
+            if ($rootScope.currentUser) return $rootScope.currentUser.userType;
+            else return false;
         };
+
         vm.logout = function () {
             UserService
                 .logout()

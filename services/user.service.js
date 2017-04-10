@@ -7,10 +7,13 @@ module.exports = function (app, models) {
     app.post("/api/login", passport.authenticate("local"), login);
     app.post("/api/logout", logout);
     app.get("/api/loggedin", loggedin);
+    app.get("/api/users", findUsers);
 
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
     passport.use(new LocalStrategy(localStrategy));
+
+    var userModel = models.userModel;
 
     function serializeUser(user, done) {
         done(null, user);
@@ -29,8 +32,6 @@ module.exports = function (app, models) {
             return done(null, user);
         });
     }
-
-    var userModel = models.userModel;
 
     function register(req, res) {
         var user = req.body;
@@ -56,5 +57,12 @@ module.exports = function (app, models) {
 
     function loggedin(req, res) {
         res.send(req.isAuthenticated() ? req.user : false);
+    }
+
+    function findUsers(req, res) {
+        userModel.find({}, function (err, users) {
+            if (err) res.status(500).send(err);
+            else res.json(users);
+        });
     }
 };

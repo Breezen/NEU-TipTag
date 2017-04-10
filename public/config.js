@@ -20,6 +20,11 @@
                 controller: "LoginController",
                 controllerAs: "model"
             })
+            .when("/admin", {
+                templateUrl: "views/user/admin.view.html",
+                controller: "AdminController",
+                controllerAs: "model"
+            })
             .otherwise({redirectTo: "/"});
     }
 })();

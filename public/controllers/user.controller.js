@@ -2,7 +2,8 @@
     angular
         .module("TipTag")
         .controller("RegisterController", RegisterController)
-        .controller("LoginController", LoginController);
+        .controller("LoginController", LoginController)
+        .controller("AdminController", AdminController);
 
     function RegisterController($rootScope, $location, UserService) {
         var vm = this;
@@ -36,5 +37,20 @@
                     alert("Error: " + err.statusText);
                 });
         };
+    }
+    
+    function AdminController($rootScope, $location, UserService) {
+        var vm = this;
+
+        function init() {
+            UserService
+                .findUsers()
+                .then(function (res) {
+                    vm.users = res.data;
+                }, function (err) {
+                    alert("Error: " + err.statusText);
+                });
+        }
+        init();
     }
 })();

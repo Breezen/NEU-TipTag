@@ -8,7 +8,8 @@
             register: register,
             login: login,
             logout: logout,
-            loggedin: loggedin
+            loggedin: loggedin,
+            findUsers: findUsers
         };
         return api;
 
@@ -26,6 +27,10 @@
 
         function loggedin() {
             return $http.get("/api/loggedin");
+        }
+        
+        function findUsers() {
+            return $http.get("/api/users");
         }
     }
 })();
