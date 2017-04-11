@@ -30,16 +30,16 @@
                 </td>
             </tr>
             <tr>
-                <td><input type="text" class="form-control" ng-model="user.username"></td>
-                <td><input type="text" class="form-control" ng-model="user.password"></td>
-                <td><input type="text" class="form-control" ng-model="user.name"></td>
-                <td><select class="form-control" ng-model="user.userType">
+                <td><input type="text" class="form-control" ng-model="model.user.username"></td>
+                <td><input type="text" class="form-control" ng-model="model.user.password"></td>
+                <td><input type="text" class="form-control" ng-model="model.user.name"></td>
+                <td><select class="form-control" ng-model="model.user.userType">
                     <option value="TAGGER">Tagger</option>
                     <option value="TIPPER">Tipper</option>
                     <option value="ADMIN">Admin</option>
                 </select></td>
                 <td>
-                    <a ng-click="model.create(user)">Create</a>
+                    <a ng-click="model.create(model.user)">Create</a>
                 </td>
             </tr>
         </tbody>

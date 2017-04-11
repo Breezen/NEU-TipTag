@@ -15,6 +15,7 @@ module.exports = function () {
 
     return {
         userModel: require("./user.model")(mongoose),
-        taskModel: require("./task.model")(mongoose)
+        taskModel: require("./task.model")(mongoose),
+        imageModel: require("./image.model")(mongoose)
     };
 };

@@ -1,0 +1,24 @@
+<div class="container">
+    <p>{{model.task}}</p>
+    <ul>
+        <li ng-repeat="image in model.images">
+            <img ng-src="{{image.url}}" style="width: 30%">
+        </li>
+    </ul>
+    <table class="table" ng-if="currentUser._id === model.task.tipper">
+        <thead>
+        <tr>
+            <th>URL</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input type="text" class="form-control" ng-model="model.newImage.url"></td>
+            <td>
+                <a ng-click="model.addImage(model.newImage)">Add an image</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

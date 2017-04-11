@@ -1,12 +1,24 @@
 <div class="container">
     <ul class="nav nav-pills nav-justified">
-        <li class="active"><a href="">Posted tasks</a></li>
-        <li><a href="">Unsplash tasks</a></li>
-        <li><a href="">Create a task</a></li>
+        <li><a ng-click="model.tab = 1">Posted tasks</a></li>
+        <li><a ng-click="model.tab = 2">Unsplash tasks</a></li>
     </ul>
-    <ul>
-        <li ng-repeat="task in model.tasks">
-            {{task.name}}, {{task.tipper}}
-        </li>
-    </ul>
+
+    <div ng-show="model.tab == 1">
+        Posted tasks
+        <ul>
+            <li ng-repeat="task in model.tasks">
+                <a href="#/task/{{task._id}}">{{task.name}}, {{task.tipper.name}}</a>
+            </li>
+        </ul>
+    </div>
+
+    <div ng-show="model.tab == 2">
+        Unsplash tasks
+        <ul>
+            <li ng-repeat="image in model.unsplash">
+                <img ng-src="{{image.urls.thumb}}">
+            </li>
+        </ul>
+    </div>
 </div>

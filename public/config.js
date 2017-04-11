@@ -30,6 +30,21 @@
                 controller: "TaskListController",
                 controllerAs: "model"
             })
+            .when("/newtask", {
+                templateUrl: "views/task/new.view.html",
+                controller: "NewTaskController",
+                controllerAs: "model"
+            })
+            .when("/mytasks", {
+                templateUrl: "views/task/my.view.html",
+                controller: "MyTasksController",
+                controllerAs: "model"
+            })
+            .when("/task/:tid", {
+                templateUrl: "views/task/detail.view.html",
+                controller: "TaskDetailController",
+                controllerAs: "model"
+            })
             .otherwise({redirectTo: "/"});
     }
 })();

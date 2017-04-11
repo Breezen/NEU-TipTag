@@ -1,0 +1,9 @@
+<div class="container">
+    <h1>New Task</h1>
+    <form>
+        <input ng-model="model.task.name" class="form-control" type="text" placeholder="Name">
+        <input ng-model="model.task.description" class="form-control" type="text" placeholder="Description">
+        <input ng-model="model.task.price" class="form-control" type="text" placeholder="Price($/image)">
+    </form>
+    <a ng-click="model.create(model.task)">Create</a>
+</div>
