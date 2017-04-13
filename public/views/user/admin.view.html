@@ -1,11 +1,6 @@
-<div class="container">
-    <!--<ol>-->
-        <!--<li ng-repeat="user in model.users">-->
-            <!--{{user.username}}, {{user.password}}, {{user.name}}, {{user.userType}}-->
-        <!--</li>-->
-    <!--</ol>-->
-    <table class="table">
-        <thead>
+<div class="container-fluid" style="padding-left: 0; padding-right: 0">
+    <table class="table table-bordered">
+        <thead class="thead-default">
             <tr>
                 <th>Username</th>
                 <th>Password</th>
@@ -25,11 +20,13 @@
                     <option value="ADMIN">Admin</option>
                 </select></td>
                 <td>
-                    <a ng-click="model.update(user)">Update</a>
-                    <a ng-click="model.delete(user)">Delete</a>
+                    <div class="btn-group" role="group">
+                        <button ng-click="model.update(user)" type="button" class="btn btn-outline-primary">Update</button>
+                        <button ng-click="model.delete(user)" type="button" class="btn btn-outline-danger">Delete</button>
+                    </div>
                 </td>
             </tr>
-            <tr>
+            <tr class="table-success">
                 <td><input type="text" class="form-control" ng-model="model.user.username"></td>
                 <td><input type="text" class="form-control" ng-model="model.user.password"></td>
                 <td><input type="text" class="form-control" ng-model="model.user.name"></td>
@@ -39,7 +36,7 @@
                     <option value="ADMIN">Admin</option>
                 </select></td>
                 <td>
-                    <a ng-click="model.create(model.user)">Create</a>
+                    <button ng-click="model.create(model.user)" type="button" class="btn btn-outline-success">Create</button>
                 </td>
             </tr>
         </tbody>

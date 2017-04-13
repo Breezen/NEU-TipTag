@@ -1,14 +1,20 @@
-<div class="container" ng-controller="HeaderController as model">
-    <ul>
-        <li><a href="#/">Home</a></li>
-        <li ng-if="currentUser.userType == 'ADMIN' || currentUser.userType == 'TIPPER'"><a href="#/newtask">Post a task</a></li>
-        <li ng-if="currentUser.userType == 'ADMIN' || currentUser.userType == 'TIPPER'"><a href="#/mytasks">My tasks</a></li>
-        <li ng-if="currentUser.userType == 'ADMIN'">Login Admin: <a href="#/admin">Manage Users</a></li>
-        <li ng-if="currentUser">Login User: <a href="#/user/{{currentUser._id}}">Profile</a></li>
-        <li>Visitor</li>
-        <li><a href="#/tasks">Browse tasks</a></li>
-        <li ng-if="!currentUser"><a href="#/register">Register</a></li>
-        <li ng-if="!currentUser"><a ng-click="model.login()">Login</a></li>
-        <li ng-if="currentUser"><a ng-click="model.logout()">Logout</a></li>
-    </ul>
-</div>
+<nav class="navbar fixed-top navbar-toggleable-sm navbar-inverse bg-primary" ng-controller="HeaderController as model">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#/">TipTag</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto">
+            <a href="#/tasks" class="nav-item nav-link">Browse tasks</a>
+            <a href="#/newtask" ng-if="currentUser.userType == 'TIPPER'" class="nav-item nav-link">Post a task</a>
+        </div>
+        <div class="navbar-nav ml-auto">
+            <a href="#/mytasks" ng-if="currentUser.userType == 'TIPPER'" class="nav-item nav-link">My tasks</a>
+            <a href="#/admin" ng-if="currentUser.userType == 'ADMIN'" class="nav-item nav-link">Manage Users</a>
+            <a href="#/register" ng-if="!currentUser" class="nav-item nav-link">Register</a>
+            <a href="#/login" ng-if="!currentUser" class="nav-item nav-link">Login</a>
+            <a href="#/user/{{currentUser._id}}" ng-if="currentUser" class="nav-item nav-link">Profile</a>
+            <a ng-click="model.logout()" ng-if="currentUser" class="nav-item nav-link">Logout</a>
+        </div>
+    </div>
+</nav>

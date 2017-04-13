@@ -1,3 +1,31 @@
 <div class="container">
-    {{model.user}}
+    <h1>Profile</h1>
+    <div ng-if="currentUser._id === model.uid">
+        <form>
+            <div class="form-group">
+                <label for="userType">I'm a</label>
+                <select ng-model="model.user.userType" class="form-control" name="userType" id="userType">
+                    <option value="TAGGER">Tagger</option>
+                    <option value="TIPPER">Tipper</option>
+                    <option value="ADMIN">Admin</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input ng-model="model.user.username" type="text" class="form-control" id="username" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input ng-model="model.user.password" type="password" class="form-control" id="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input ng-model="model.user.name" type="text" class="form-control" id="name" placeholder="Name">
+            </div>
+        </form>
+        <button ng-click="model.register(model.user)" class="btn btn-primary btn-block">Save</button>
+    </div>
+    <div ng-if="currentUser._id !== model.uid">
+        <h2>{{model.user.name}} <span class="badge badge-default">{{model.user.userType}}</span></h2>
+    </div>
 </div>
