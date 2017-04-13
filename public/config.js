@@ -25,6 +25,11 @@
                 controller: "AdminController",
                 controllerAs: "model"
             })
+            .when("/user/:uid", {
+                templateUrl: "views/user/profile.view.html",
+                controller: "ProfileController",
+                controllerAs: "model"
+            })
             .when("/tasks", {
                 templateUrl: "views/task/list.view.html",
                 controller: "TaskListController",

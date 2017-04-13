@@ -3,7 +3,8 @@
         .module("TipTag")
         .controller("RegisterController", RegisterController)
         .controller("LoginController", LoginController)
-        .controller("AdminController", AdminController);
+        .controller("AdminController", AdminController)
+        .controller("ProfileController", ProfileController);
 
     function RegisterController($rootScope, $location, UserService) {
         var vm = this;
@@ -85,5 +86,21 @@
                     alert("Error: " + err.statusText);
                 });
         };
+    }
+
+    function ProfileController($rootScope, $location, $route, $routeParams, UserService) {
+        var vm = this;
+        vm.uid = $routeParams.uid;
+
+        function init() {
+            UserService
+                .findUserById(vm.uid)
+                .then(function (res) {
+                    vm.user = res.data;
+                }, function (err) {
+                    alert("Error: " + err.statusText);
+                });
+        }
+        init();
     }
 })();

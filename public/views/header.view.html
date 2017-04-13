@@ -4,7 +4,7 @@
         <li ng-if="currentUser.userType == 'ADMIN' || currentUser.userType == 'TIPPER'"><a href="#/newtask">Post a task</a></li>
         <li ng-if="currentUser.userType == 'ADMIN' || currentUser.userType == 'TIPPER'"><a href="#/mytasks">My tasks</a></li>
         <li ng-if="currentUser.userType == 'ADMIN'">Login Admin: <a href="#/admin">Manage Users</a></li>
-        <li ng-if="currentUser">Login User: <a href="">Profile</a></li>
+        <li ng-if="currentUser">Login User: <a href="#/user/{{currentUser._id}}">Profile</a></li>
         <li>Visitor</li>
         <li><a href="#/tasks">Browse tasks</a></li>
         <li ng-if="!currentUser"><a href="#/register">Register</a></li>

@@ -1,8 +1,19 @@
 <div class="container">
-    <p>{{model.task}}</p>
+    <h1>{{model.task.name}}</h1>
+    <div ng-if="currentUser._id !== model.task.tipper">{{model.task.description}}</div>
+    <div ng-if="currentUser._id === model.task.tipper">
+        <input ng-model="model.task.description" type="text" class="form-control">
+        <button ng-click="model.updateTask(model.task)">Update</button>
+    </div>
     <ul>
         <li ng-repeat="image in model.images">
             <img ng-src="{{image.url}}" style="width: 30%">
+            {{image.tag}}
+            <div ng-if="!image.tag">
+                <input ng-model="image.newTag" type="text">
+                <button ng-click="model.tagImage(image)">Tag</button>
+            </div>
+            <button ng-if="currentUser._id === model.task.tipper" ng-click="model.deleteImage(image)">Delete</button>
         </li>
     </ul>
     <table class="table" ng-if="currentUser._id === model.task.tipper">

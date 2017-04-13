@@ -6,6 +6,7 @@ module.exports = function (mongoose) {
         task: { type: ObjectId, ref: "Task" },
         url: String,
         tag: String,
+        tagger: { type: ObjectId, ref: "User" },
         dateCreated: { type: Date, default: Date.now }
     });
 

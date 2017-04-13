@@ -10,9 +10,11 @@
             logout: logout,
             loggedin: loggedin,
             findUsers: findUsers,
+            findUserById: findUserById,
             create: create,
             update: update,
-            delete: deleteUser
+            delete: deleteUser,
+            addBalance: addBalance
         };
         return api;
 
@@ -35,7 +37,11 @@
         function findUsers() {
             return $http.get("/api/users");
         }
-        
+
+        function findUserById(uid) {
+            return $http.get("/api/user/" + uid);
+        }
+
         function create(user) {
             return $http.post("/api/user", user);
         }
@@ -46,6 +52,10 @@
 
         function deleteUser(user) {
             return $http.delete("/api/user/" + user._id);
+        }
+        
+        function addBalance(uid, deltaBalance) {
+            return $http.post("/api/user/balance", {uid: uid, delta: deltaBalance});
         }
     }
 })();

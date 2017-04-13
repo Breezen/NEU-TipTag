@@ -1,6 +1,7 @@
 module.exports = function (app, models) {
 
     app.post("/api/task", create);
+    app.put("/api/task", update);
     app.get("/api/tasks", findAllTasks);
     app.get("/api/task/:tid", findTaskById);
     app.get("/api/tasks/:uid", findMyTasks);
@@ -10,6 +11,14 @@ module.exports = function (app, models) {
     function create(req, res) {
         var task = req.body;
         taskModel.create(task, function (err, task) {
+            if (err) res.status(400).send(err);
+            else res.json(task);
+        });
+    }
+
+    function update(req, res) {
+        var task = req.body;
+        taskModel.update({_id: task._id}, {$set: task}, function (err, task) {
             if (err) res.status(400).send(err);
             else res.json(task);
         });

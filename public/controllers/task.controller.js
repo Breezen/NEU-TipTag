@@ -6,7 +6,7 @@
         .controller("MyTasksController", MyTasksController)
         .controller("TaskDetailController", TaskDetailController);
     
-    function TaskListController($rootScope, $location, TaskService) {
+    function TaskListController($rootScope, $location, UserService, TaskService, ImageService) {
         var vm = this;
 
         function init() {
@@ -20,13 +20,28 @@
                 });
             // TaskService
             //     .getUnsplashCurated()
+            //     .getUnsplashRandom()
             //     .then(function (res) {
-            //         vm.unsplash = res.data;
+            //         vm.unsplash = [res.data];
             //     }, function (err) {
             //         alert("Error: " + err.statusText);
             //     });
         }
         init();
+
+        // pending
+        // vm.tagUnplashImage = function (image) {
+        //     var toSave = {};
+        //     toSave.tag = image.newTag;
+        //     ImageService
+        //         .create(image)
+        //         .then(function (res) {
+        //             alert("Image updated!");
+        //             $route.reload();
+        //         }, function (err) {
+        //             alert("Error: " + err.statusText);
+        //         });
+        // };
     }
     
     function NewTaskController($rootScope, $location, TaskService) {
@@ -98,6 +113,17 @@
                 });
         }
         init();
+
+        vm.updateTask = function (task) {
+            TaskService
+                .update(task)
+                .then(function (res) {
+                    alert("Task updated!");
+                    $route.reload();
+                }, function (err) {
+                    alert("Error: " + err.statusText);
+                });
+        };
         
         vm.addImage = function (image) {
             image.task = vm.tid;
@@ -108,7 +134,47 @@
                     $route.reload();
                 }, function (err) {
                     alert("Error: " + err.statusText);
-                })
+                });
+        };
+        
+        vm.tagImage = function (image) {
+            image.tag = image.newTag;
+            if ($rootScope.currentUser) {
+                image.tagger = $rootScope.currentUser._id;
+                UserService
+                    .addBalance(image.tagger, vm.task.price)
+                    .then(function (res) {
+                        // show money earned.
+                    }, function (err) {
+                        alert("Error: " + err.statusText);
+                    });
+            }
+            UserService
+                .addBalance(vm.task.tipper, -vm.task.price)
+                .then(function (res) {
+                    alert("Balance deducted!");
+                }, function (err) {
+                    alert("Error: " + err.statusText);
+                });
+            ImageService
+                .update(image)
+                .then(function (res) {
+                    alert("Image updated!");
+                    $route.reload();
+                }, function (err) {
+                    alert("Error: " + err.statusText);
+                });
+        };
+
+        vm.deleteImage = function (image) {
+            ImageService
+                .delete(image)
+                .then(function (res) {
+                    alert("Image deleted!");
+                    $route.reload();
+                }, function (err) {
+                    alert("Error: " + err.statusText);
+                });
         }
     }
 })();

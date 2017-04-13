@@ -1,7 +1,7 @@
 <div class="container">
     <ul class="nav nav-pills nav-justified">
         <li><a ng-click="model.tab = 1">Posted tasks</a></li>
-        <li><a ng-click="model.tab = 2">Unsplash tasks</a></li>
+        <li><a ng-click="model.tab = 2">Unsplash images</a></li>
     </ul>
 
     <div ng-show="model.tab == 1">
@@ -14,10 +14,15 @@
     </div>
 
     <div ng-show="model.tab == 2">
-        Unsplash tasks
+        Unsplash images
         <ul>
             <li ng-repeat="image in model.unsplash">
                 <img ng-src="{{image.urls.thumb}}">
+                {{image.tag}}
+                <div ng-if="!image.tag">
+                    <input ng-model="image.newTag" type="text">
+                    <button ng-click="model.tagUnplashImage(image)">Tag</button>
+                </div>
             </li>
         </ul>
     </div>

@@ -22,9 +22,11 @@ module.exports = function (app, models) {
     app.get("/auth/facebook", passport.authenticate("facebook", {scope: "email"}));
     app.get("/auth/facebook/callback", passport.authenticate("facebook", {successRedirect: "/#/", failureRedirect: "/#/login"}));
     app.get("/api/users", findUsers);
+    app.get("/api/user/:userId", findUserById);
     app.post("/api/user", create);
     app.put("/api/user", update);
     app.delete("/api/user/:userId", deleteUser);
+    app.post("/api/user/balance", addBalance);
 
     var userModel = models.userModel;
 
@@ -84,6 +86,14 @@ module.exports = function (app, models) {
         });
     }
 
+    function findUserById(req, res) {
+        var userId = req.params.userId;
+        userModel.findById(userId, function (err, user) {
+            if (err) res.status(400).send(err);
+            else res.json(user);
+        })
+    }
+
     function create(req, res) {
         var user = req.body;
         user.password = bcrypt.hashSync(user.password);
@@ -107,5 +117,17 @@ module.exports = function (app, models) {
             if (err) res.status(400).send(err);
             else res.json(user);
         })
+    }
+
+    function addBalance(req, res) {
+        var uid = req.body.uid,
+            delta = req.body.delta;
+        userModel.findById(uid, function (err, user) {
+            user.balance += delta;
+            userModel.findByIdAndUpdate(uid, user, function (err, user) {
+                if (err) res.status(400).send(err);
+                else res.json(user);
+            });
+        });
     }
 };
