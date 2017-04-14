@@ -1,29 +1,82 @@
 <div class="container">
-    <ul class="nav nav-pills nav-justified">
-        <li><a ng-click="model.tab = 1">Posted tasks</a></li>
-        <li><a ng-click="model.tab = 2">Unsplash images</a></li>
-    </ul>
-
-    <div ng-show="model.tab == 1">
-        Posted tasks
-        <ul>
-            <li ng-repeat="task in model.tasks">
-                <a href="#/task/{{task._id}}">{{task.name}}, {{task.tipper.name}}</a>
+    <div class="row">
+        <ul class="nav nav-pills nav-justified col-sm-12" style="padding: 0 15px 0 15px">
+            <li class="nav-item">
+                <a ng-click="model.tab = 1; model.tab1 = 'active'; model.tab2 = ''" class="nav-link {{model.tab1}}">Posted Tasks</a>
+            </li>
+            <li class="nav-item">
+                <a ng-click="model.tab = 2; model.tab2 = 'active'; model.tab1 = ''" class="nav-link {{model.tab2}}">Unsplash Images</a>
             </li>
         </ul>
     </div>
 
-    <div ng-show="model.tab == 2">
-        Unsplash images
-        <ul>
-            <li ng-repeat="image in model.unsplash">
-                <img ng-src="{{image.urls.thumb}}">
-                {{image.tag}}
-                <div ng-if="!image.tag">
-                    <input ng-model="image.newTag" type="text">
-                    <button ng-click="model.tagUnplashImage(image)">Tag</button>
+    <div ng-show="model.tab == 1">
+        <div class="row">
+            <div class="input-group col-sm-12" style="padding: 0 15px 0 15px">
+                <input ng-model="model.searchTerm" type="text" class="form-control" placeholder="Search Tasks">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sort By
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" ng-click="model.order = 'name'">Name</a>
+                        <a class="dropdown-item" ng-click="model.order = '-price'">Reward</a>
+                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="list-group">
+            <li ng-repeat="task in model.tasks | filter: model.searchTerm | orderBy: model.order"
+                class="list-group-item list-group-item-action">
+                <a href="#/task/{{task._id}}" style="margin-right: 15px">{{task.name}}</a>
+                <span class="badge badge-warning">Reward: {{task.price}}</span>
+                <span class="ml-auto">Posted by
+                    <a ng-if="currentUser._id !== task.tipper._id" href="#/user/{{task.tipper._id}}">{{task.tipper.name}}</a>
+                    <a ng-if="currentUser._id === task.tipper._id" href="#/user/{{task.tipper._id}}">Me</a>
+                </span>
             </li>
-        </ul>
+        </div>
+    </div>
+
+    <div ng-show="model.tab == 2">
+        <div class="row">
+            <div class="input-group col-sm-12" style="padding: 0 15px 0 15px">
+                <input ng-model="model.unsplashTerm" type="text" class="form-control" placeholder="Search Unsplash">
+                <div class="input-group-btn">
+                    <button ng-click="model.unsplashSearch()" class="btn btn-secondary">Search</button>
+                </div>
+                <div class="input-group-btn">
+                    <button ng-click="model.unsplashRandom()" class="btn btn-secondary">Random</button>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="model.unsplash.length == 1" class="row">
+            <div ng-repeat="image in model.unsplash" class="col-md-12 col-sm-12" style="margin: 30px 0">
+                <img ng-src="{{image.urls.regular}}" style="width: 100%">
+                <div>
+                    <div class="input-group">
+                        <input ng-model="image.newTag" type="text" class="form-control">
+                        <div class="input-group-btn">
+                            <button ng-click="model.tagUnplashImage(image)" class="btn btn-success">Tag</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="model.unsplash.length > 1" class="row">
+            <div ng-repeat="image in model.unsplash" class="col-md-4 col-sm-6" style="margin: 30px 0">
+                <img ng-src="{{image.urls.small}}" style="height: 250px; width: 100%">
+                <div>
+                    <div class="input-group">
+                        <input ng-model="image.newTag" type="text" class="form-control">
+                        <div class="input-group-btn">
+                            <button ng-click="model.tagUnplashImage(image)" class="btn btn-success">Tag</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

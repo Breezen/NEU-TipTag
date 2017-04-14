@@ -1,7 +1,24 @@
 <div class="container">
-    <ul>
-        <li ng-repeat="task in model.mytasks">
-            <a href="#/task/{{task._id}}">{{task.name}}</a>
+    <div class="row">
+        <div class="input-group col-sm-12" style="padding: 0 15px 0 15px">
+            <input ng-model="model.searchTerm" type="text" class="form-control" placeholder="Search Tasks">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort By
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" ng-click="model.order = 'name'">Name</a>
+                    <a class="dropdown-item" ng-click="model.order = '-price'">Reward</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="list-group">
+        <li ng-repeat="task in model.mytasks | filter: model.searchTerm | orderBy: model.order"
+            class="list-group-item list-group-item-action">
+            <a href="#/task/{{task._id}}" style="margin-right: 15px">{{task.name}}</a>
+            <span class="badge badge-warning">Reward: {{task.price}}</span>
+            <span class="ml-auto">Posted by <a href="#/user/{{task.tipper}}">Me</a></span>
         </li>
-    </ul>
+    </div>
 </div>

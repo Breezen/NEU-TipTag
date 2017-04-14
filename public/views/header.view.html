@@ -6,7 +6,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="navbar-nav mr-auto">
             <a href="#/tasks" class="nav-item nav-link">Browse tasks</a>
-            <a href="#/newtask" ng-if="currentUser.userType == 'TIPPER'" class="nav-item nav-link">Post a task</a>
+            <a href="#/newtask" ng-if="currentUser.userType == 'TIPPER' || currentUser.userType == 'ADMIN'" class="nav-item nav-link">Post a task</a>
         </div>
         <div class="navbar-nav ml-auto">
             <a href="#/mytasks" ng-if="currentUser.userType == 'TIPPER'" class="nav-item nav-link">My tasks</a>

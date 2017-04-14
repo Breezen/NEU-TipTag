@@ -92,6 +92,8 @@
         var vm = this;
         vm.uid = $routeParams.uid;
 
+        vm.tab1 = "active";
+
         function init() {
             UserService
                 .findUserById(vm.uid)

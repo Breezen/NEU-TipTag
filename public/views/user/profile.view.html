@@ -1,6 +1,7 @@
 <div class="container">
     <h1>Profile</h1>
     <div ng-if="currentUser._id === model.uid">
+        <h3>{{model.user.name}} <span class="badge badge-default">Balance: {{model.user.balance}}</span></h3>
         <form>
             <div class="form-group">
                 <label for="userType">I'm a</label>
@@ -13,10 +14,6 @@
             <div class="form-group">
                 <label for="username">Username</label>
                 <input ng-model="model.user.username" type="text" class="form-control" id="username" placeholder="Username">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input ng-model="model.user.password" type="password" class="form-control" id="password" placeholder="Password">
             </div>
             <div class="form-group">
                 <label for="name">Name</label>

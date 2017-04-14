@@ -9,6 +9,8 @@
     function TaskListController($rootScope, $location, UserService, TaskService, ImageService) {
         var vm = this;
 
+        vm.tab1 = "active";
+
         function init() {
             vm.tab = 1;
             TaskService
@@ -18,30 +20,56 @@
                 }, function (err) {
                     alert("Error: " + err.statusText);
                 });
-            // TaskService
-            //     .getUnsplashCurated()
-            //     .getUnsplashRandom()
-            //     .then(function (res) {
-            //         vm.unsplash = [res.data];
-            //     }, function (err) {
-            //         alert("Error: " + err.statusText);
-            //     });
+            TaskService
+                // .getUnsplashCurated()
+                .getUnsplashRandom()
+                .then(function (res) {
+                    vm.unsplash = [res.data];
+                }, function (err) {
+                    alert("Error: " + err.statusText);
+                });
         }
         init();
 
-        // pending
-        // vm.tagUnplashImage = function (image) {
-        //     var toSave = {};
-        //     toSave.tag = image.newTag;
-        //     ImageService
-        //         .create(image)
-        //         .then(function (res) {
-        //             alert("Image updated!");
-        //             $route.reload();
-        //         }, function (err) {
-        //             alert("Error: " + err.statusText);
-        //         });
-        // };
+        vm.unsplashRandom = function () {
+            TaskService
+                .getUnsplashRandom()
+                .then(function (res) {
+                    vm.unsplash = [res.data];
+                }, function (err) {
+                    alert("Error: " + err.statusText);
+                });
+        };
+
+        vm.unsplashSearch = function () {
+            TaskService
+                .getUnsplashSearch(vm.unsplashTerm)
+                .then(function (res) {
+                    vm.unsplash = res.data.results;
+                }, function (err) {
+                    alert("Error: " + err.statusText);
+                });
+        };
+
+        vm.tagUnplashImage = function (image) {
+            TaskService
+                .getUnsplashRandom()
+                .then(function (res) {
+                    vm.unsplash = [res.data];
+                }, function (err) {
+                    alert("Error: " + err.statusText);
+                });
+            // var toSave = {};
+            // toSave.tag = image.newTag;
+            // ImageService
+            //     .create(image)
+            //     .then(function (res) {
+            //         alert("Image updated!");
+            //         $route.reload();
+            //     }, function (err) {
+            //         alert("Error: " + err.statusText);
+            //     });
+        };
     }
     
     function NewTaskController($rootScope, $location, TaskService) {
@@ -139,19 +167,20 @@
         
         vm.tagImage = function (image) {
             image.tag = image.newTag;
-            if ($rootScope.currentUser) {
-                image.tagger = $rootScope.currentUser._id;
-                UserService
-                    .addBalance(image.tagger, vm.task.price)
-                    .then(function (res) {
-                        // show money earned.
-                    }, function (err) {
-                        alert("Error: " + err.statusText);
-                    });
-            }
+
             UserService
                 .addBalance(vm.task.tipper, -vm.task.price)
                 .then(function (res) {
+                    if ($rootScope.currentUser) {
+                        image.tagger = $rootScope.currentUser._id;
+                        UserService
+                            .addBalance(image.tagger, vm.task.price)
+                            .then(function (res) {
+                                alert(image.tagger + "money earned!");
+                            }, function (err) {
+                                alert("Error: " + err.statusText);
+                            });
+                    }
                     alert("Balance deducted!");
                 }, function (err) {
                     alert("Error: " + err.statusText);

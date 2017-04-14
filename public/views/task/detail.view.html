@@ -1,35 +1,40 @@
 <div class="container">
     <h1>{{model.task.name}}</h1>
-    <div ng-if="currentUser._id !== model.task.tipper">{{model.task.description}}</div>
-    <div ng-if="currentUser._id === model.task.tipper">
-        <input ng-model="model.task.description" type="text" class="form-control">
-        <button ng-click="model.updateTask(model.task)">Update</button>
+    <div ng-if="currentUser._id !== model.task.tipper">
+        <h4>{{model.task.description}} <span class="badge badge-warning">Reward: {{model.task.price}}</span></h4>
     </div>
-    <ul>
-        <li ng-repeat="image in model.images">
-            <img ng-src="{{image.url}}" style="width: 30%">
-            {{image.tag}}
-            <div ng-if="!image.tag">
-                <input ng-model="image.newTag" type="text">
-                <button ng-click="model.tagImage(image)">Tag</button>
+    <div ng-if="currentUser._id === model.task.tipper">
+        <div class="input-group">
+            <span class="input-group-addon">Description</span>
+            <input ng-model="model.task.description" type="text" class="form-control">
+            <span class="input-group-addon">Reward ($/image)</span>
+            <input ng-model="model.task.price" type="text" class="form-control">
+            <div class="input-group-btn">
+                <button ng-click="model.updateTask(model.task)" class="btn btn-primary">Update</button>
             </div>
-            <button ng-if="currentUser._id === model.task.tipper" ng-click="model.deleteImage(image)">Delete</button>
-        </li>
-    </ul>
-    <table class="table" ng-if="currentUser._id === model.task.tipper">
-        <thead>
-        <tr>
-            <th>URL</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><input type="text" class="form-control" ng-model="model.newImage.url"></td>
-            <td>
-                <a ng-click="model.addImage(model.newImage)">Add an image</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">Add an image</span>
+            <input ng-model="model.newImage.url" type="text" class="form-control" placeholder="URL">
+            <div class="input-group-btn">
+                <button ng-click="model.addImage(model.newImage)" class="btn btn-success">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div ng-repeat="image in model.images" class="col-md-4 col-sm-6" style="margin: 30px 0">
+            <img ng-src="{{image.url}}" alt="" style="height: 250px; width: 100%">
+            <div>
+                <h2><span class="badge badge-primary">{{image.tag}}</span></h2>
+                <div ng-if="!image.tag" class="input-group">
+                    <input ng-model="image.newTag" type="text" class="form-control">
+                    <div class="input-group-btn">
+                        <button ng-click="model.tagImage(image)" class="btn btn-success">Tag</button>
+                    </div>
+                </div>
+            </div>
+            <button ng-if="currentUser._id === model.task.tipper" ng-click="model.deleteImage(image)" class="btn btn-danger btn-block">Delete</button>
+        </div>
+    </div>
 </div>
