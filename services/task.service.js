@@ -45,10 +45,12 @@ module.exports = function (app, models) {
         var userId = req.params.uid,
             role = req.query.role;
         if (role === "TIPPER") {
-            taskModel.find({tipper: userId}, function (err, tasks) {
-                if (err) res.status(400).send(err);
-                else res.json(tasks);
-            });
+            taskModel.find({tipper: userId})
+                .populate("tipper")
+                .exec(function (err, tasks) {
+                    if (err) res.status(400).send(err);
+                    else res.json(tasks);
+                });
         }
     }
 };

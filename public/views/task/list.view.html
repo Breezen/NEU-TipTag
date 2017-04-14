@@ -53,6 +53,8 @@
 
         <div ng-if="model.unsplash.length == 1" class="row">
             <div ng-repeat="image in model.unsplash" class="col-md-12 col-sm-12" style="margin: 30px 0">
+                Photo by
+                <a href="{{image.user.links.html}}">{{image.user.name}}</a>
                 <img ng-src="{{image.urls.regular}}" style="width: 100%">
                 <div>
                     <div class="input-group">
@@ -67,6 +69,8 @@
 
         <div ng-if="model.unsplash.length > 1" class="row">
             <div ng-repeat="image in model.unsplash" class="col-md-4 col-sm-6" style="margin: 30px 0">
+                Photo by
+                <a href="{{image.user.links.html}}">{{image.user.name}}</a>
                 <img ng-src="{{image.urls.small}}" style="height: 250px; width: 100%">
                 <div>
                     <div class="input-group">

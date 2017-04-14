@@ -14,7 +14,7 @@
                 .register(user)
                 .then(function (res) {
                     var user = res.data;
-                    alert("User " + user.username + " created!");
+                    // alert("User " + user.username + " created!");
                     $rootScope.currentUser = user;
                     $location.url("/");
                 }, function (err) {
@@ -31,7 +31,7 @@
                 .login(user)
                 .then(function (res) {
                     var user = res.data;
-                    alert("User " + user.username + " login!");
+                    // alert("User " + user.username + " login!");
                     $rootScope.currentUser = user;
                     $location.url("/");
                 }, function (err) {
@@ -58,7 +58,7 @@
             UserService
                 .create(user)
                 .then(function (res) {
-                    alert("User " + user.username + " created!");
+                    // alert("User " + user.username + " created!");
                     $route.reload();
                 }, function (err) {
                     alert("Error: " + err.statusText);
@@ -69,7 +69,7 @@
             UserService
                 .update(user)
                 .then(function (res) {
-                    alert("User " + user.username + " updated!");
+                    // alert("User " + user.username + " updated!");
                     $route.reload();
                 }, function (err) {
                     alert("Error: " + err.statusText);
@@ -80,7 +80,7 @@
             UserService
                 .delete(user)
                 .then(function (res) {
-                    alert("User " + user.username + " deleted!");
+                    // alert("User " + user.username + " deleted!");
                     $route.reload();
                 }, function (err) {
                     alert("Error: " + err.statusText);
@@ -88,7 +88,7 @@
         };
     }
 
-    function ProfileController($rootScope, $location, $route, $routeParams, UserService) {
+    function ProfileController($rootScope, $location, $route, $routeParams, UserService, TaskService) {
         var vm = this;
         vm.uid = $routeParams.uid;
 
@@ -99,6 +99,13 @@
                 .findUserById(vm.uid)
                 .then(function (res) {
                     vm.user = res.data;
+                    TaskService
+                        .findTasksByTipper(vm.uid)
+                        .then(function (res) {
+                            vm.tasks = res.data;
+                        }, function (err) {
+                            alert("Error: " + err.statusText);
+                        });
                 }, function (err) {
                     alert("Error: " + err.statusText);
                 });

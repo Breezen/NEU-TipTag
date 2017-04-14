@@ -80,7 +80,7 @@
             TaskService
                 .create(task)
                 .then(function (res) {
-                    alert("Task " + task.name + " created!");
+                    // alert("Task " + task.name + " created!");
                     $location.url("/task/" + res.data._id);
                 }, function (err) {
                     alert("Error: " + err.statusText);
@@ -146,7 +146,7 @@
             TaskService
                 .update(task)
                 .then(function (res) {
-                    alert("Task updated!");
+                    // alert("Task updated!");
                     $route.reload();
                 }, function (err) {
                     alert("Error: " + err.statusText);
@@ -158,7 +158,7 @@
             ImageService
                 .create(image)
                 .then(function (res) {
-                    alert("Image created!");
+                    // alert("Image created!");
                     $route.reload();
                 }, function (err) {
                     alert("Error: " + err.statusText);
@@ -176,19 +176,19 @@
                         UserService
                             .addBalance(image.tagger, vm.task.price)
                             .then(function (res) {
-                                alert(image.tagger + "money earned!");
+                                // alert(image.tagger + "money earned!");
                             }, function (err) {
                                 alert("Error: " + err.statusText);
                             });
                     }
-                    alert("Balance deducted!");
+                    // alert("Balance deducted!");
                 }, function (err) {
                     alert("Error: " + err.statusText);
                 });
             ImageService
                 .update(image)
                 .then(function (res) {
-                    alert("Image updated!");
+                    // alert("Image updated!");
                     $route.reload();
                 }, function (err) {
                     alert("Error: " + err.statusText);
@@ -199,7 +199,7 @@
             ImageService
                 .delete(image)
                 .then(function (res) {
-                    alert("Image deleted!");
+                    // alert("Image deleted!");
                     $route.reload();
                 }, function (err) {
                     alert("Error: " + err.statusText);

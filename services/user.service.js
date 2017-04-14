@@ -4,11 +4,7 @@ module.exports = function (app, models) {
         LocalStrategy = require('passport-local').Strategy,
         FacebookStrategy = require('passport-facebook').Strategy,
         bcrypt = require("bcrypt-nodejs");
-    // var facebookConfig = {
-    //     clientID: 233601263783851,
-    //     clientSecret: "ebe4d2ae38b0b86977d1700fcbb6593e",
-    //     callbackURL: "http://localhost:3000/auth/facebook/callback"
-    // };
+    
     var facebookConfig = {
         clientID: process.env.FB_ID,
         clientSecret: process.env.FB_SECRET,

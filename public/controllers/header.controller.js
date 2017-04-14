@@ -16,10 +16,6 @@
         }
         init();
 
-        vm.login = function () {
-            $location.url("/login");
-        };
-
         vm.logout = function () {
             UserService
                 .logout()
