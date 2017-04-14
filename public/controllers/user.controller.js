@@ -104,5 +104,15 @@
                 });
         }
         init();
+
+        vm.update = function(user) {
+            UserService
+                .update(user)
+                .then(function (res) {
+
+                }, function (err) {
+                    alert("Error: " + err.statusText);
+                });
+        };
     }
 })();

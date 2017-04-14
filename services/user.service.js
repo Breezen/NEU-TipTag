@@ -4,10 +4,15 @@ module.exports = function (app, models) {
         LocalStrategy = require('passport-local').Strategy,
         FacebookStrategy = require('passport-facebook').Strategy,
         bcrypt = require("bcrypt-nodejs");
+    // var facebookConfig = {
+    //     clientID: 233601263783851,
+    //     clientSecret: "ebe4d2ae38b0b86977d1700fcbb6593e",
+    //     callbackURL: "http://localhost:3000/auth/facebook/callback"
+    // };
     var facebookConfig = {
-        clientID: 233601263783851,
-        clientSecret: "ebe4d2ae38b0b86977d1700fcbb6593e",
-        callbackURL: "http://localhost:3000/#/"
+        clientID: process.env.FB_ID,
+        clientSecret: process.env.FB_SECRET,
+        callbackURL: process.env.FB_CALLBACK
     };
 
     passport.serializeUser(serializeUser);
@@ -49,7 +54,27 @@ module.exports = function (app, models) {
     }
 
     function facebookStrategy(token, refreshToken, profile, done) {
-        userModel.findOne({"facebook.id": profile.id});
+        userModel.findOne({"facebook.id": profile.id}, function (err, user) {
+            if (err) return done(err);
+            else {
+                if (user) return done(null, user);
+                else {
+                    var newUser = {
+                        userType: "TAGGER",
+                        username: profile.id,
+                        name: profile.displayName,
+                        facebook: {
+                            id:    profile.id,
+                            token: token
+                        }
+                    };
+                    userModel.create(newUser, function (err, user) {
+                        if (err) return done(err);
+                        else return done(null, user);
+                    })
+                }
+            }
+        });
     }
 
     function register(req, res) {

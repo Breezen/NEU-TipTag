@@ -20,7 +20,7 @@
                 <input ng-model="model.user.name" type="text" class="form-control" id="name" placeholder="Name">
             </div>
         </form>
-        <button ng-click="model.register(model.user)" class="btn btn-primary btn-block">Save</button>
+        <button ng-click="model.update(model.user)" class="btn btn-primary btn-block">Save</button>
     </div>
     <div ng-if="currentUser._id !== model.uid">
         <h2>{{model.user.name}} <span class="badge badge-default">{{model.user.userType}}</span></h2>
