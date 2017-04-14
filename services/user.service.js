@@ -4,7 +4,7 @@ module.exports = function (app, models) {
         LocalStrategy = require('passport-local').Strategy,
         FacebookStrategy = require('passport-facebook').Strategy,
         bcrypt = require("bcrypt-nodejs");
-    
+
     var facebookConfig = {
         clientID: process.env.FB_ID,
         clientSecret: process.env.FB_SECRET,

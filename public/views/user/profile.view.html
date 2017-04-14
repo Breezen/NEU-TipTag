@@ -25,7 +25,9 @@
     </div>
 
     <div ng-if="currentUser._id !== model.uid">
-        <h3>{{model.user.name}} <span class="badge badge-default">{{model.user.userType}}</span></h3>
+        <h3>{{model.user.name}} <span class="badge badge-default">{{model.user.userType}}</span>
+            <button class="btn btn-outline-primary">Follow</button>
+        </h3>
         <div class="list-group">
             <li ng-repeat="task in model.tasks" class="list-group-item list-group-item-action">
                 <a href="#/task/{{task._id}}" style="margin-right: 15px">{{task.name}}</a>
