@@ -21,3 +21,8 @@ require("./services/services")(app, models);
 
 var port = process.env.PORT || 3000;
 app.listen(port);
+
+var http = require("http");
+setInterval(function () {
+    http.get("http://tiptag.herokuapp.com");
+}, 300000);
